@@ -22,7 +22,7 @@ lb %>% rowwise() %>% mutate(across(lm1:lm4|lms1dw|lms1sbbf|lmb,~-rd(.x,opt))) %>
 ##   Here "sub" are the best known values from Scholl (2013), via Scholl (2019, personal communication).
 rg = read_csv(paste0(results,"/rule-grasp.csv"))
 rt = rg %>% mutate(across(ub10:ub1000,~rd(.x,sub))) %>% group_by(set,alpha) %>% summarize(across(ub10:ub1000|t10:t1000,mean)) %>% as_tibble()
-rt %>% bind_rows(rg %>% summarize(across(ub10:last_col(),mean)))
+rt %>% bind_rows(rt %>% summarize(across(ub10:last_col(),mean)))
 
 ## Tables: Rule sets and Hoffmann
 rh = read_csv(paste0(results,"/rules+hoffmann.csv"))
@@ -42,12 +42,6 @@ lfs = read_csv(paste0(results,"/l-f-star.csv"))
 rgs = rg %>% full_join(sch)
 
 ub = rg %>% inner_join(lfs) %>% rowwise() %>% mutate(lmb=max(c_across(lm1:lm4),na.rm=T)) %>% select(-c(lm1:lm4)) %>% mutate(nopt = sum(ub1000 == lmb)) %>% group_by(set,alpha) %>% summarize(opt=100*sum(nopt)/n())
-
-## Lower bounds
-lm4.agree = 100 * sum(with(lb, lm4==opt)) / nrow(lb)
-dw.notagree = sum(with(lb, lms1dw != opt))
-cat(glue("LM4 is clearly the best of the simple bounds and agrees with the optimal value on {format(lm4.agree,digits=1)}% of the instances.\n\n"))
-cat(glue("LMDW produces the best bound, and on all except {dw.notagree} larger instances equals the optimal value.\n\n"))
 
 ## Upper bounds
 or1 = mean(ub$opt)
