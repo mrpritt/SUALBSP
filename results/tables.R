@@ -8,6 +8,7 @@ results=here("results")
 normal_names = function(df) {
     df %>% separate(inst,c("set","inst"),sep="/") %>% separate(set,c("set","alpha"),sep="-") %>% mutate(alpha=as.numeric(alpha))
 }
+rd = function(v,o) { 100*(v-o)/o }
 
 ######################################################################
 ## Tables
@@ -26,12 +27,10 @@ rt %>% bind_rows(rt %>% summarize(across(ub10:last_col(),mean)))
 
 ## Tables: Rule sets and Hoffmann
 rh = read_csv(paste0(results,"/rules+hoffmann.csv"))
-
 rh %>% normal_names() %>% group_by(set,alpha,alg) %>% summarize(rlb=mean(rd(ub,lb)),time=mean(elapsed),nopt=100*sum(lb==ub)/n()) %>% pivot_wider(names_from=alg,values_from=c(rlb,time,nopt)) %>% as_tibble()
 
 ## Tables: CBFS
 cbfs = read_csv(paste0(results,"/cbfs.csv"))
-
 cbfs %>% normal_names() %>% group_by(set,alpha,alg) %>% summarize(rlb=mean(rd(ub,lb)),time=mean(elapsed),nopt=100*sum(lb==ub)/n()) %>% pivot_wider(names_from=alg,values_from=c(rlb,time,nopt)) %>% as_tibble()
 
 ######################################################################
