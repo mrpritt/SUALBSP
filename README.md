@@ -1,6 +1,6 @@
 # SUALBSP
 
-Supplements to "New solution approaches for balancing assembly lines with setup times" which solves the setup assembly line balancing and scheduling problem (SUALBSP).
+Supplements to [New solution approaches for balancing assembly lines with setup times](https://doi.org/10.1016/j.cor.2025.107202) which solves the setup assembly line balancing and scheduling problem (SUALBSP).
 
 ## Code
 
@@ -27,6 +27,10 @@ To reproduce the tables in the paper, you can run the GNU R script [tables.R](re
   author =   {Jordi Pereira and Marcus Ritt},
   title =    {New solution approaches for balancing assembly lines with setup times},
   journal =  {Computers and Operations Research},
-  doi =      {10.1016/j.cor.2025.107202}
+  volume =   {183},
+  number =   {107202},
+  month =    nov, 
+  doi =      {10.1016/j.cor.2025.107202},
+  url =      {https://doi.org/10.1016/j.cor.2025.107202}
 }
 ```
